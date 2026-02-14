@@ -1,0 +1,45 @@
+modules = ["nodejs-20", "postgresql-16"]
+[agent]
+expertMode = true
+integrations = ["javascript_openai_ai_integrations:2.0.0", "javascript_log_in_with_replit:2.0.0"]
+
+[workflows]
+runButton = "Project"
+
+[[workflows.workflow]]
+name = "Project"
+mode = "parallel"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "workflow.run"
+args = "RecipeVault"
+
+[[workflows.workflow]]
+name = "RecipeVault"
+author = "agent"
+
+[[workflows.workflow.tasks]]
+task = "shell.exec"
+args = "cd /home/runner/workspace/app && npx expo export --platform web 2>&1 && cd /home/runner/workspace/server && npx tsx src/index.ts"
+waitForPort = 5000
+
+[workflows.workflow.metadata]
+outputType = "webview"
+
+[[ports]]
+localPort = 5000
+externalPort = 80
+
+[nix]
+channel = "stable-25_05"
+
+[deployment]
+deploymentTarget = "autoscale"
+run = ["bash", "-c", "cd /home/runner/workspace/server && npx tsx src/index.ts"]
+build = ["bash", "-c", "cd /home/runner/workspace/app && npx expo export --platform web"]
+
+[userenv]
+
+[userenv.shared]
+JWT_SECRET = "dece00737d41b6a0defe9a8df99fd481ff0451831e036d293e35019df7f34eb0"

@@ -1,0 +1,37 @@
+{
+  "name": "recipevault",
+  "private": true,
+  "workspaces": [
+    "shared",
+    "server",
+    "app"
+  ],
+  "scripts": {
+    "dev": "concurrently \"npm run dev:server\" \"npm run dev:app\"",
+    "dev:server": "cd server && npm run dev",
+    "dev:app": "cd app && npx expo start --web --port 5000",
+    "start": "concurrently \"npm run start:server\" \"npm run start:app\"",
+    "start:server": "cd server && npm start",
+    "start:app": "cd app && npx expo start --web --port 5000"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
+  },
+  "dependencies": {
+    "@types/connect-pg-simple": "^7.0.3",
+    "@types/express-session": "^1.18.2",
+    "@types/memoizee": "^0.4.12",
+    "@types/passport": "^1.0.17",
+    "connect-pg-simple": "^10.0.0",
+    "drizzle-zod": "^0.8.3",
+    "express-session": "^1.19.0",
+    "memoizee": "^0.4.17",
+    "openai": "^6.22.0",
+    "openid-client": "^6.8.2",
+    "p-limit": "^7.3.0",
+    "p-retry": "^7.1.1",
+    "passport": "^0.7.0",
+    "zod": "^3.25.76",
+    "zod-validation-error": "^5.0.0"
+  }
+}
